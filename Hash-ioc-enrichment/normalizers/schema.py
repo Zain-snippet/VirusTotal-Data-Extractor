@@ -66,3 +66,12 @@ class IOCResult:
     exiftool: Optional[dict] = None
     trid: list[dict] = field(default_factory=list)
     sandbox_verdicts: Optional[dict] = None
+
+    # ── IP-address-specific fields (populated when ioc_type == "ip") ──
+    asn: Optional[int] = None
+    as_owner: Optional[str] = None
+    country: Optional[str] = None
+    continent: Optional[str] = None
+    network: Optional[str] = None
+    regional_internet_registry: Optional[str] = None
+    whois: Optional[str] = None

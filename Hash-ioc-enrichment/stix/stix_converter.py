@@ -1,7 +1,8 @@
 """
-STIX 2.1 converter — maps VT IOCResult (file hash) objects to STIX Indicator SDOs.
+STIX 2.1 converter — maps VT IOCResult objects to STIX Indicator SDOs.
 
-One Indicator per hash result. The shared TOOL_IDENTITY is included once
+Handles file hashes (hash / cert_hash) and IP addresses (ip).
+One Indicator per result. The shared TOOL_IDENTITY is included once
 in every bundle as the created_by_ref anchor.
 """
 
@@ -15,7 +16,7 @@ from normalizers.schema import IOCResult
 TOOL_IDENTITY = stix2.Identity(
     name="IOC-Enrichment-Pipeline",
     identity_class="system",
-    description="VirusTotal file-hash enrichment and STIX 2.1 export tool",
+    description="VirusTotal IOC enrichment and STIX 2.1 export tool",
 )
 
 
@@ -30,18 +31,25 @@ def _detect_hash_type(hash_value: str) -> Optional[str]:
     return None
 
 
-def _build_pattern(hash_value: str) -> str:
-    """Return a STIX pattern string for a file hash.
+def _build_pattern(ioc: str, ioc_type: str) -> str:
+    """Return a STIX 2.1 pattern string for the given IOC value and type.
 
-    Raises ValueError if the hash length doesn't map to MD5 / SHA-1 / SHA-256.
+    - ``ip`` → ``[ipv4-addr:value = '<ip>']``
+    - ``hash`` / ``cert_hash`` → ``[file:hashes.'<ALGO>' = '<value>']``
+
+    Raises ValueError if the IOC type is unknown or if a hash value cannot
+    be mapped to a known algorithm.
     """
-    algo = _detect_hash_type(hash_value)
+    if ioc_type == "ip":
+        return f"[ipv4-addr:value = '{ioc}']"
+
+    algo = _detect_hash_type(ioc)
     if algo is None:
         raise ValueError(
-            f"Cannot determine hash algorithm for '{hash_value}' "
-            f"(length {len(hash_value)}, expected 32 / 40 / 64 hex chars)"
+            f"Cannot determine hash algorithm for '{ioc}' "
+            f"(length {len(ioc)}, expected 32 / 40 / 64 hex chars)"
         )
-    return f"[file:hashes.'{algo}' = '{hash_value}']"
+    return f"[file:hashes.'{algo}' = '{ioc}']"
 
 
 def _fmt_ts(iso_str: Optional[str]) -> Optional[str]:
@@ -59,10 +67,11 @@ def _fmt_ts(iso_str: Optional[str]) -> Optional[str]:
 def _build_custom_properties(result: IOCResult) -> dict:
     """Map the additional VT fields on IOCResult to STIX 2.1 custom
     properties (the spec-compliant way to extend an SDO — every key must
-    be prefixed 'x_'). Only non-empty values are included so the
+    be prefixed 'x_vt_'). Only non-empty values are included so the
     Indicator doesn't get cluttered with nulls/empty lists.
     """
     candidates = {
+        # File-specific fields
         "x_vt_md5": result.md5,
         "x_vt_sha1": result.sha1,
         "x_vt_sha256": result.sha256,
@@ -87,6 +96,14 @@ def _build_custom_properties(result: IOCResult) -> dict:
         "x_vt_exiftool": result.exiftool,
         "x_vt_trid": result.trid,
         "x_vt_sandbox_verdicts": result.sandbox_verdicts,
+        # IP-specific fields
+        "x_vt_asn": result.asn,
+        "x_vt_as_owner": result.as_owner,
+        "x_vt_country": result.country,
+        "x_vt_continent": result.continent,
+        "x_vt_network": result.network,
+        "x_vt_regional_internet_registry": result.regional_internet_registry,
+        "x_vt_whois": result.whois,
     }
     return {k: v for k, v in candidates.items() if v not in (None, [], {}, "")}
 
@@ -95,7 +112,7 @@ def to_stix_indicator(
     result: IOCResult,
     identity: stix2.Identity = TOOL_IDENTITY,
 ) -> Optional[stix2.Indicator]:
-    """Convert a VT IOCResult for a file hash into a STIX 2.1 Indicator SDO.
+    """Convert a VT IOCResult into a STIX 2.1 Indicator SDO.
 
     Returns None when there is no actionable verdict (query failed or
     malicious is None), so callers can safely filter with ``if indicator``.
@@ -104,14 +121,15 @@ def to_stix_indicator(
         return None
 
     try:
-        pattern = _build_pattern(result.ioc)
+        pattern = _build_pattern(result.ioc, result.ioc_type)
     except ValueError:
         return None
 
     indicator_type = "malicious-activity" if result.malicious else "benign"
 
+    type_label = result.ioc_type.replace("_", "-")
     display_ioc = (result.ioc[:48] + "...") if len(result.ioc) > 48 else result.ioc
-    name = f"{display_ioc} (hash) - virustotal"
+    name = f"{display_ioc} ({type_label}) - virustotal"
 
     description_parts = ["Source: virustotal"]
     if result.source_url:
@@ -125,6 +143,10 @@ def to_stix_indicator(
     )
     valid_until = _fmt_ts(result.last_seen)
 
+    labels = list(result.tags)
+    if result.ioc_type == "cert_hash":
+        labels.append("sslbl-ssl-cert")
+
     kwargs: dict = {
         "name": name,
         "description": description,
@@ -133,7 +155,7 @@ def to_stix_indicator(
         "created_by_ref": str(identity.id),
         "valid_from": valid_from,
         "indicator_types": [indicator_type],
-        "labels": list(result.tags),
+        "labels": labels,
     }
 
     if result.confidence is not None:

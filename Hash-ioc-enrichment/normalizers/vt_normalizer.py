@@ -25,6 +25,8 @@ VT_MALICIOUS_ENGINE_THRESHOLD = 3
 # URL path segment mapping for VT web UI links
 VT_UI_PATH: dict[str, str] = {
     "hash": "file",
+    "ip": "ip-address",
+    "cert_hash": "file",
 }
 
 
@@ -108,61 +110,91 @@ def _extract_signature_info(signature_info: Optional[dict]) -> Optional[dict]:
     }
 
 
+def _extract_shared(attrs: dict) -> tuple:
+    """Extract fields common to both file and IP VT responses.
+
+    Returns a tuple of (malicious, raw_score, confidence, tags, first_seen,
+    last_seen, source_url, total_votes, engine_detections, reputation).
+    """
+    stats = attrs.get("last_analysis_stats", {})
+    malicious_count: int = stats.get("malicious", 0)
+    suspicious_count: int = stats.get("suspicious", 0)
+    harmless_count: int = stats.get("harmless", 0)
+    undetected_count: int = stats.get("undetected", 0)
+
+    total_engines = malicious_count + suspicious_count + harmless_count + undetected_count
+
+    malicious = malicious_count >= VT_MALICIOUS_ENGINE_THRESHOLD
+
+    if total_engines > 0:
+        raw_score = round(malicious_count / total_engines, 4)
+    else:
+        raw_score = None
+
+    confidence = None
+    tags: list[str] = attrs.get("tags", []) or []
+
+    first_ts = (
+        attrs.get("first_submission_date")
+        or attrs.get("first_seen_itw_date")
+        or attrs.get("creation_date")
+    )
+    last_ts = (
+        attrs.get("last_analysis_date")
+        or attrs.get("last_modification_date")
+    )
+
+    first_seen = _ts_to_iso(first_ts)
+    last_seen = _ts_to_iso(last_ts)
+
+    total_votes = attrs.get("total_votes")
+    reputation = attrs.get("reputation")
+    engine_detections = _extract_engine_detections(
+        attrs.get("last_analysis_results", {})
+    )
+
+    return malicious, raw_score, confidence, tags, first_seen, last_seen, total_votes, engine_detections, reputation
+
+
 def normalize(raw: dict, ioc: str, ioc_type: str) -> IOCResult:
     try:
         data = raw.get("data", {})
         attrs = data.get("attributes", {})
-        resource_id: str = data.get("id", ioc)
 
-        stats = attrs.get("last_analysis_stats", {})
-        malicious_count: int = stats.get("malicious", 0)
-        suspicious_count: int = stats.get("suspicious", 0)
-        harmless_count: int = stats.get("harmless", 0)
-        undetected_count: int = stats.get("undetected", 0)
-
-        total_engines = malicious_count + suspicious_count + harmless_count + undetected_count
-
-        malicious = malicious_count >= VT_MALICIOUS_ENGINE_THRESHOLD
-
-        # raw_score: ratio of malicious detections to total engines.
-        # This is informative even if under the threshold — a 2/70 ratio
-        # is different from 0/70 even if both are "not malicious" per our
-        # judgment call.
-        if total_engines > 0:
-            raw_score = round(malicious_count / total_engines, 4)
-        else:
-            raw_score = None
-
-        # Confidence is not directly available from VT's public API.
-        # VT uses reputation(-100 to 100) and total_votes internally,
-        # but neither maps cleanly to a 0–100 confidence scale. We leave
-        # it as None rather than improvising.
-        confidence = None
-
-        tags: list[str] = attrs.get("tags", []) or []
-
-        first_ts = (
-            attrs.get("first_submission_date")
-            or attrs.get("first_seen_itw_date")
-            or attrs.get("creation_date")
-        )
-        last_ts = (
-            attrs.get("last_analysis_date")
-            or attrs.get("last_modification_date")
-        )
-
-        first_seen = _ts_to_iso(first_ts)
-        last_seen = _ts_to_iso(last_ts)
+        (malicious, raw_score, confidence, tags, first_seen, last_seen,
+         total_votes, engine_detections, reputation) = _extract_shared(attrs)
 
         ui_path = VT_UI_PATH.get(ioc_type, ioc_type)
         source_url = f"https://www.virustotal.com/gui/{ui_path}/{ioc}/detection"
 
-        # ── Additional data — same response, previously unused ──────────
-        total_votes = attrs.get("total_votes")
+        if ioc_type == "ip":
+            return IOCResult(
+                source="virustotal",
+                ioc=ioc,
+                ioc_type=ioc_type,
+                malicious=malicious,
+                confidence=confidence,
+                raw_score=raw_score,
+                tags=tags,
+                first_seen=first_seen,
+                last_seen=last_seen,
+                source_url=source_url,
+                query_success=True,
+                error=None,
+                reputation=reputation,
+                total_votes=total_votes,
+                engine_detections=engine_detections,
+                asn=attrs.get("asn"),
+                as_owner=attrs.get("as_owner"),
+                country=attrs.get("country"),
+                continent=attrs.get("continent"),
+                network=attrs.get("network"),
+                regional_internet_registry=attrs.get("regional_internet_registry"),
+                whois=attrs.get("whois"),
+            )
+
+        # ioc_type in ("hash", "cert_hash") — identical file-attribute extraction
         last_submission_date = _ts_to_iso(attrs.get("last_submission_date"))
-        engine_detections = _extract_engine_detections(
-            attrs.get("last_analysis_results", {})
-        )
         pe_info = _extract_pe_info(attrs.get("pe_info"))
         signature_info = _extract_signature_info(attrs.get("signature_info"))
 
@@ -194,7 +226,7 @@ def normalize(raw: dict, ioc: str, ioc_type: str) -> IOCResult:
             names=attrs.get("names", []) or [],
             times_submitted=attrs.get("times_submitted"),
             last_submission_date=last_submission_date,
-            reputation=attrs.get("reputation"),
+            reputation=reputation,
             total_votes=total_votes,
             popular_threat_classification=attrs.get("popular_threat_classification"),
             engine_detections=engine_detections,

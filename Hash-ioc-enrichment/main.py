@@ -153,7 +153,7 @@ def main() -> None:
     #}
 
     # --- Option B: multi-IOC JSON file (STIX bundle or flat JSON) ---
-    iocs = extract_iocs_from_file("C:\\Users\\jahan\\Desktop\\ioc-enrichment\\30-entries.json")
+    iocs = extract_iocs_from_file("C:\\Users\\jahan\\Desktop\\ioc-enrichment\\60-entries.json")
     # ----------------------------------------------------------------
 
     total_found = sum(len(v) for v in iocs.values())

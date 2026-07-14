@@ -1,0 +1,16 @@
+{
+    "type": "bundle",
+    "id": "bundle--5b6f3330-fc86-409c-abfa-904ac7db4e63",
+    "objects": [
+        {
+            "type": "identity",
+            "spec_version": "2.1",
+            "id": "identity--d46a2bd7-a492-4ce8-af2f-a76e10261442",
+            "created": "2026-07-13T06:12:25.803264Z",
+            "modified": "2026-07-13T06:12:25.803264Z",
+            "name": "IOC-Enrichment-Pipeline",
+            "description": "VirusTotal file-hash enrichment and STIX 2.1 export tool",
+            "identity_class": "system"
+        }
+    ]
+}

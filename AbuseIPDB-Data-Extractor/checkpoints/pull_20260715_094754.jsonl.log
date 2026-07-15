@@ -1,0 +1,3 @@
+2026-07-15 14:47:54,854 [INFO] fetcher: Fetching blacklist from AbuseIPDB (confidence>=90, limit=10000)
+2026-07-15 14:47:59,520 [INFO] fetcher: Fetched 10000 blacklist records
+2026-07-15 14:47:59,522 [INFO] writer: Checkpoint file opened: checkpoints\pull_20260715_094754.jsonl

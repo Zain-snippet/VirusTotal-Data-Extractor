@@ -144,30 +144,43 @@ def main() -> None:
     # FOLDER INPUT — uncomment exactly ONE of the two blocks below.
     # ----------------------------------------------------------------
 
-    # --- Option A: hardcoded path ---
-    #folder_path = r"C:\Users\jahan\Desktop\ioc-enrichment\feeds"
+    # --- Option A: hardcoded paths ---
+    #folder_paths = [
+    #    r"C:\Users\jahan\Desktop\ioc-enrichment\feeds",
+    #    r"C:\Users\jahan\Desktop\New folder (2)",
+    #]
 
-    # --- Option B: user input via CLI ---
-    folder_path = input("Enter folder path: ").strip()
+    # --- Option B: user input via CLI (comma-separated) ---
+    raw_input = input("Enter folder path(s) (comma-separated): ").strip()
+    folder_paths = [p.strip() for p in raw_input.split(",") if p.strip()]
     # ----------------------------------------------------------------
 
-    folder = Path(folder_path)
-    if not folder.exists() or not folder.is_dir():
-        print(f"[error] Invalid folder path: {folder_path}", file=sys.stderr)
+    if not folder_paths:
+        print("[error] No folder path provided.", file=sys.stderr)
         return
 
-    # ── Discover input files ──────────────────────────────────────────
-    files = sorted(
-        set(folder.rglob("*.json")) | set(folder.rglob("*.jsonl"))
-    )
-    files = [f for f in files if "output" not in f.parts]
+    # ── Discover input files across all folders ──────────────────────
+    files: list[Path] = []
+    for folder_path in folder_paths:
+        folder = Path(folder_path)
+        if not folder.exists() or not folder.is_dir():
+            print(f"[error] Invalid folder path, skipping: {folder_path}", file=sys.stderr)
+            continue
+
+        folder_files = sorted(
+            set(folder.rglob("*.json")) | set(folder.rglob("*.jsonl"))
+        )
+        folder_files = [f for f in folder_files if "output" not in f.parts]
+        files.extend(folder_files)
+
+    files = sorted(set(files))
 
     if not files:
-        print("\nNo .json or .jsonl files found (excluding output/). Exiting.")
+        print("\nNo .json or .jsonl files found across the given folders (excluding output/). Exiting.")
         return
 
-    print(f"\nFound {len(files)} file(s) to process.\n")
-
+    print(f"\nFound {len(files)} file(s) to process across {len(folder_paths)} folder(s).\n")
+    
     # ── Session state ─────────────────────────────────────────────────
     ioc_cache: dict[tuple[str, str], IOCResult] = {}
     session_results: list[IOCResult] = []

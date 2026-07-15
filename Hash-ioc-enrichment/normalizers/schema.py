@@ -75,3 +75,6 @@ class IOCResult:
     network: Optional[str] = None
     regional_internet_registry: Optional[str] = None
     whois: Optional[str] = None
+
+    # ── Source file tracking (populated by folder-scanned mode) ──
+    source_file: Optional[str] = None

@@ -19,6 +19,7 @@ import os
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
+from pathlib import Path
 from typing import Optional
 
 # Ensure imports resolve from this directory regardless of cwd.
@@ -140,36 +141,42 @@ def main() -> None:
     print("=" * 60)
 
     # ----------------------------------------------------------------
-    # INPUT — uncomment exactly ONE of the two blocks below.
+    # FOLDER INPUT — uncomment exactly ONE of the two blocks below.
     # ----------------------------------------------------------------
 
-    # --- Option A: interactive hash entry (unchanged) ---
-    #raw_hashes = get_hashes_from_user_input()
-    #iocs = {
-    #    "hash": raw_hashes,
-    #    "ip": [],
-    #    "cert_hash": [],
-    #    "ja3": [],
-    #}
+    # --- Option A: hardcoded path ---
+    # folder_path = r"C:\Users\jahan\Desktop\ioc-enrichment\feeds"
 
-    # --- Option B: multi-IOC JSON file (STIX bundle or flat JSON) ---
-    iocs = extract_iocs_from_file("C:\\Users\\jahan\\Desktop\\ioc-enrichment\\60-entries.json")
+    # --- Option B: user input via CLI ---
+    folder_path = input("Enter folder path: ").strip()
     # ----------------------------------------------------------------
 
-    total_found = sum(len(v) for v in iocs.values())
-    if total_found == 0:
-        print("\nNo IOCs found. Exiting.")
+    folder = Path(folder_path)
+    if not folder.exists() or not folder.is_dir():
+        print(f"[error] Invalid folder path: {folder_path}", file=sys.stderr)
         return
 
-    # ── Per-category counts ────────────────────────────────────────────
-    print(f"\nIOCs found:  {iocs['hash']!s} hash(es), "
-          f"{iocs['ip']!s} IP(s), "
-          f"{iocs['cert_hash']!s} cert_hash(es), "
-          f"{iocs['ja3']!s} JA3 fingerprint(s) "
-          f"(of which {len(iocs['ja3'])} will be skipped — "
-          "VirusTotal does not support JA3 lookups).")
+    # ── Discover input files ──────────────────────────────────────────
+    files = sorted(
+        set(folder.rglob("*.json")) | set(folder.rglob("*.jsonl"))
+    )
+    files = [f for f in files if "output" not in f.parts]
 
-    # ── Create one VT key worker per configured API key ────────────────
+    if not files:
+        print("\nNo .json or .jsonl files found (excluding output/). Exiting.")
+        return
+
+    print(f"\nFound {len(files)} file(s) to process.\n")
+
+    # ── Session state ─────────────────────────────────────────────────
+    ioc_cache: dict[tuple[str, str], IOCResult] = {}
+    session_results: list[IOCResult] = []
+    files_processed = 0
+    files_skipped = 0
+    cache_hits = 0
+    vt_queries = 0
+    ja3_total = 0
+
     workers = vt_connector.create_workers()
     num_workers = len(workers)
 
@@ -180,67 +187,102 @@ def main() -> None:
     jsonl_path = os.path.join(output_dir, f"session_{timestamp}.jsonl")
     out_path = os.path.join(output_dir, f"session_{timestamp}.json")
 
-    results: list[IOCResult] = []
     jsonl_file: Optional[object] = None
 
     with ThreadPoolExecutor(max_workers=num_workers) as executor:
         jsonl_file = open(jsonl_path, "w", encoding="utf-8")
 
-        for category in _QUERYABLE_TYPES:
-            items = iocs.get(category, [])
-            if not items:
-                print(f"\n--- {category}: 0 IOCs, skipping ---")
-                continue
+        for file in files:
+            try:
+                print(f"\n--- Processing: {file} ---")
+                iocs = extract_iocs_from_file(str(file))
+                total_found = sum(len(v) for v in iocs.values())
 
-            print(f"\n--- Enriching {len(items)} {category}(s) "
-                  f"using {num_workers} API key(s) ---")
-            cat_results = _enrich_category(
-                category, items, workers, executor, jsonl_file
-            )
-            results.extend(cat_results)
+                if total_found == 0:
+                    print(f"  No IOCs found, skipping.")
+                    files_skipped += 1
+                    continue
 
-        # JA3 — count-only, never queried
-        ja3_count = len(iocs.get("ja3", []))
-        if ja3_count > 0:
-            print(f"\n--- ja3: {ja3_count} fingerprint(s) found — "
-                  "not queryable on VirusTotal, skipped ---")
+                # JA3 — count-only, never queried
+                ja3_count = len(iocs.get("ja3", []))
+                ja3_total += ja3_count
+                if ja3_count > 0:
+                    print(f"  {ja3_count} JA3 fingerprint(s) found — "
+                          "not queryable on VirusTotal, skipped")
+
+                for category in _QUERYABLE_TYPES:
+                    items = iocs.get(category, [])
+                    if not items:
+                        continue
+
+                    hit_list: list[str] = []
+                    miss_list: list[str] = []
+                    for ioc_val in items:
+                        key = (category, ioc_val.lower())
+                        if key in ioc_cache:
+                            hit_list.append(ioc_val)
+                        else:
+                            miss_list.append(ioc_val)
+
+                    if hit_list:
+                        for ioc_val in hit_list:
+                            cached = ioc_cache[(category, ioc_val.lower())]
+                            result = dataclasses.replace(
+                                cached, source_file=str(file)
+                            )
+                            session_results.append(result)
+                            record = dataclasses.asdict(result)
+                            jsonl_file.write(json.dumps(record) + "\n")
+                            jsonl_file.flush()
+                            cache_hits += 1
+
+                    if miss_list:
+                        cat_results = _enrich_category(
+                            category, miss_list, workers, executor, jsonl_file
+                        )
+                        for result in cat_results:
+                            if result.query_success:
+                                ioc_cache[
+                                    (result.ioc_type, result.ioc.lower())
+                                ] = result
+                            result.source_file = str(file)
+                            session_results.append(result)
+                            vt_queries += 1
+
+                files_processed += 1
+
+            except Exception as e:
+                print(f"[error] Skipping {file}: {e}", file=sys.stderr)
+                files_skipped += 1
 
     # ── Build and save STIX bundle ─────────────────────────────────────
     if jsonl_file is not None:
         jsonl_file.close()
 
-    if results:
-        bundle = to_stix_bundle(results)
-        stix_json = bundle.serialize(pretty=True)
-
-        with open(out_path, "w", encoding="utf-8") as f:
-            f.write(stix_json)
-
-        parsed = json.loads(stix_json)
-        n_indicators = sum(1 for o in parsed["objects"] if o["type"] == "indicator")
-
-        print("\n" + "=" * 60)
-        print("  Enrichment Summary by Category:")
-        print(f"    hash:      found={len(iocs['hash'])}, "
-              f"queried={sum(1 for r in results if r.ioc_type=='hash')}")
-
-        ip_queried = sum(1 for r in results if r.ioc_type == "ip")
-        print(f"    ip:        found={len(iocs['ip'])}, "
-              f"queried={ip_queried}")
-
-        cert_queried = sum(1 for r in results if r.ioc_type == "cert_hash")
-        print(f"    cert_hash: found={len(iocs['cert_hash'])}, "
-              f"queried={cert_queried}")
-        print(f"    ja3:       found={len(iocs.get('ja3', []))}, "
-              "skipped (not queryable)")
-
-        print(f"\n  Total results: {len(results)}")
-        print(f"  STIX indicators: {n_indicators}")
-        print(f"  Saved to  {out_path}")
-        print(f"  Incremental log:  {jsonl_path}")
-        print("=" * 60)
-    else:
+    if not session_results:
         print("\nNo results collected.")
+        return
+
+    bundle = to_stix_bundle(session_results)
+    stix_json = bundle.serialize(pretty=True)
+
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(stix_json)
+
+    parsed = json.loads(stix_json)
+    n_indicators = sum(1 for o in parsed["objects"] if o["type"] == "indicator")
+
+    print("\n" + "=" * 60)
+    print("  Session Summary")
+    print(f"  Files scanned:        {files_processed}")
+    print(f"  Files skipped:        {files_skipped}")
+    print(f"  VT queries made:      {vt_queries}")
+    print(f"  Cache hits:           {cache_hits}")
+    print(f"  Total results:        {len(session_results)}")
+    print(f"  STIX indicators:      {n_indicators}")
+    print(f"  Output:               {out_path}")
+    print(f"  Incremental log:      {jsonl_path}")
+    print("=" * 60)
 
 
 if __name__ == "__main__":

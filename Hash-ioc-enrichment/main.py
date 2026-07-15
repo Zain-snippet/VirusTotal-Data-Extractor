@@ -145,19 +145,29 @@ def main() -> None:
     # ----------------------------------------------------------------
 
     # --- Option A: hardcoded paths ---
-    #folder_paths = [
-    #    r"C:\Users\jahan\Desktop\ioc-enrichment\feeds",
-    #    r"C:\Users\jahan\Desktop\New folder (2)",
-    #]
+    folder_paths = [
+        r"C:\Users\jahan\Desktop\VirusTotal-Data-Extractor\Feeds\cape\output",
+        r"C:\Users\jahan\Desktop\VirusTotal-Data-Extractor\Feeds\catalyst\output",
+        r"C:\Users\jahan\Desktop\VirusTotal-Data-Extractor\Feeds\criminalip_c2_daily_feed\output",
+        r"C:\Users\jahan\Desktop\VirusTotal-Data-Extractor\Feeds\ctibutler\output",
+        r"C:\Users\jahan\Desktop\VirusTotal-Data-Extractor\Feeds\threatfox\output",
+        r"C:\Users\jahan\Desktop\VirusTotal-Data-Extractor\AbuseIPDB-Data-Extractor\output",
+        r"C:\Users\jahan\Desktop\VirusTotal-Data-Extractor\SSL\sslbl_pipeline\data\output",
+    ]
 
     # --- Option B: user input via CLI (comma-separated) ---
-    raw_input = input("Enter folder path(s) (comma-separated): ").strip()
-    folder_paths = [p.strip() for p in raw_input.split(",") if p.strip()]
+    #raw_input = input("Enter folder path(s) (comma-separated): ").strip()
+    #folder_paths = [p.strip() for p in raw_input.split(",") if p.strip()]
     # ----------------------------------------------------------------
 
     if not folder_paths:
         print("[error] No folder path provided.", file=sys.stderr)
         return
+
+    # ── This script's own output directory (never scan our own results) ──
+    output_dir = os.path.join(_script_dir, "output")
+    os.makedirs(output_dir, exist_ok=True)
+    own_output_dir = Path(output_dir).resolve()
 
     # ── Discover input files across all folders ──────────────────────
     files: list[Path] = []
@@ -170,17 +180,20 @@ def main() -> None:
         folder_files = sorted(
             set(folder.rglob("*.json")) | set(folder.rglob("*.jsonl"))
         )
-        folder_files = [f for f in folder_files if "output" not in f.parts]
+        folder_files = [
+            f for f in folder_files
+            if own_output_dir not in f.resolve().parents
+        ]
         files.extend(folder_files)
 
     files = sorted(set(files))
 
     if not files:
-        print("\nNo .json or .jsonl files found across the given folders (excluding output/). Exiting.")
+        print("\nNo .json or .jsonl files found across the given folders (excluding this script's own output/). Exiting.")
         return
 
     print(f"\nFound {len(files)} file(s) to process across {len(folder_paths)} folder(s).\n")
-    
+
     # ── Session state ─────────────────────────────────────────────────
     ioc_cache: dict[tuple[str, str], IOCResult] = {}
     session_results: list[IOCResult] = []
@@ -193,8 +206,6 @@ def main() -> None:
     workers = vt_connector.create_workers()
     num_workers = len(workers)
 
-    output_dir = os.path.join(_script_dir, "output")
-    os.makedirs(output_dir, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     jsonl_path = os.path.join(output_dir, f"session_{timestamp}.jsonl")

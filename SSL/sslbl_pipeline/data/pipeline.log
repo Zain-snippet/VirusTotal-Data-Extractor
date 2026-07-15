@@ -1,0 +1,112 @@
+2026-07-14 09:12:21,951 [INFO] sslbl_pipeline: Downloaded ssl_cert -> data/raw\ssl_cert.csv
+2026-07-14 09:12:22,857 [INFO] sslbl_pipeline: Downloaded botnet_ip -> data/raw\botnet_ip.csv
+2026-07-14 09:12:23,779 [INFO] sslbl_pipeline: Downloaded ja3 -> data/raw\ja3.csv
+2026-07-14 09:12:23,860 [INFO] sslbl_pipeline: Parsed 10184 rows from data/raw\ssl_cert.csv
+2026-07-14 09:12:23,861 [INFO] sslbl_pipeline: Parsed 10184 rows from data/raw\ssl_cert.csv
+2026-07-14 09:12:23,873 [INFO] sslbl_pipeline: Parsed 3 rows from data/raw\botnet_ip.csv
+2026-07-14 09:12:23,874 [INFO] sslbl_pipeline: Parsed 3 rows from data/raw\botnet_ip.csv
+2026-07-14 09:12:23,895 [INFO] sslbl_pipeline: Parsed 98 rows from data/raw\ja3.csv
+2026-07-14 09:12:23,895 [INFO] sslbl_pipeline: Parsed 98 rows from data/raw\ja3.csv
+2026-07-14 09:12:55,742 [WARNING] sslbl_pipeline: Unrecognised date format '# END (10183) entries', using current UTC time.
+2026-07-14 09:12:55,773 [ERROR] sslbl_pipeline: Conversion failed:
+Traceback (most recent call last):
+  File "C:\Users\jahan\Desktop\SSL\sslbl_pipeline\main.py", line 43, in main
+    bundle = build_bundle(all_rows)
+  File "C:\Users\jahan\Desktop\SSL\sslbl_pipeline\stix_convert.py", line 103, in build_bundle
+    indicators.append(build_indicator(feed_name, row))
+                      ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\jahan\Desktop\SSL\sslbl_pipeline\stix_convert.py", line 78, in build_indicator
+    return Indicator(
+        name="SSLBL {} indicator".format(feed_name),
+    ...<7 lines>...
+        **kwargs,
+    )
+  File "C:\Users\jahan\AppData\Local\Programs\Python\Python314\Lib\site-packages\stix2\v21\sdo.py", line 250, in __init__
+    super(Indicator, self).__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\jahan\AppData\Local\Programs\Python\Python314\Lib\site-packages\stix2\base.py", line 243, in __init__
+    self._check_object_constraints()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jahan\AppData\Local\Programs\Python\Python314\Lib\site-packages\stix2\v21\sdo.py", line 270, in _check_object_constraints
+    raise InvalidValueError(self.__class__, 'pattern', str(errors[0]))
+stix2.exceptions.InvalidValueError: Invalid value for Indicator 'pattern': FAIL: 'None' is not a valid SHA-1 hash
+
+2026-07-14 09:12:55,777 [ERROR] sslbl_pipeline: Raw CSV files on disk are unaffected. Re-running will retry conversion from saved data.
+2026-07-14 09:25:18,115 [INFO] sslbl_pipeline: Downloaded ssl_cert -> data/raw\ssl_cert.csv
+2026-07-14 09:25:19,425 [INFO] sslbl_pipeline: Downloaded botnet_ip -> data/raw\botnet_ip.csv
+2026-07-14 09:25:20,851 [INFO] sslbl_pipeline: Downloaded ja3 -> data/raw\ja3.csv
+2026-07-14 09:25:20,938 [INFO] sslbl_pipeline: Parsed 10184 rows from data/raw\ssl_cert.csv
+2026-07-14 09:25:20,938 [INFO] sslbl_pipeline: Parsed 10184 rows from data/raw\ssl_cert.csv
+2026-07-14 09:25:20,940 [INFO] sslbl_pipeline: Parsed 3 rows from data/raw\botnet_ip.csv
+2026-07-14 09:25:20,940 [INFO] sslbl_pipeline: Parsed 3 rows from data/raw\botnet_ip.csv
+2026-07-14 09:25:20,959 [INFO] sslbl_pipeline: Parsed 98 rows from data/raw\ja3.csv
+2026-07-14 09:25:20,959 [INFO] sslbl_pipeline: Parsed 98 rows from data/raw\ja3.csv
+2026-07-14 09:25:34,428 [WARNING] sslbl_pipeline: Unrecognised date format '# END (10183) entries', using current UTC time.
+2026-07-14 09:25:34,434 [ERROR] sslbl_pipeline: Conversion failed:
+Traceback (most recent call last):
+  File "C:\Users\jahan\Desktop\SSL\sslbl_pipeline\main.py", line 43, in main
+    bundle = build_bundle(all_rows)
+  File "C:\Users\jahan\Desktop\SSL\sslbl_pipeline\stix_convert.py", line 103, in build_bundle
+    indicators.append(build_indicator(feed_name, row))
+                      ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\jahan\Desktop\SSL\sslbl_pipeline\stix_convert.py", line 78, in build_indicator
+    return Indicator(
+        name="SSLBL {} indicator".format(feed_name),
+    ...<7 lines>...
+        **kwargs,
+    )
+  File "C:\Users\jahan\AppData\Local\Programs\Python\Python314\Lib\site-packages\stix2\v21\sdo.py", line 250, in __init__
+    super(Indicator, self).__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\jahan\AppData\Local\Programs\Python\Python314\Lib\site-packages\stix2\base.py", line 243, in __init__
+    self._check_object_constraints()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\jahan\AppData\Local\Programs\Python\Python314\Lib\site-packages\stix2\v21\sdo.py", line 270, in _check_object_constraints
+    raise InvalidValueError(self.__class__, 'pattern', str(errors[0]))
+stix2.exceptions.InvalidValueError: Invalid value for Indicator 'pattern': FAIL: 'None' is not a valid SHA-1 hash
+
+2026-07-14 09:25:34,435 [ERROR] sslbl_pipeline: Raw CSV files on disk are unaffected. Re-running will retry conversion from saved data.
+2026-07-14 09:26:17,829 [INFO] sslbl_pipeline: Downloaded ssl_cert -> data/raw\ssl_cert.csv
+2026-07-14 09:26:18,600 [INFO] sslbl_pipeline: Downloaded botnet_ip -> data/raw\botnet_ip.csv
+2026-07-14 09:26:19,505 [INFO] sslbl_pipeline: Downloaded ja3 -> data/raw\ja3.csv
+2026-07-14 09:26:19,569 [INFO] sslbl_pipeline: Parsed 10183 rows from data/raw\ssl_cert.csv
+2026-07-14 09:26:19,570 [INFO] sslbl_pipeline: Parsed 10183 rows from data/raw\ssl_cert.csv
+2026-07-14 09:26:19,571 [INFO] sslbl_pipeline: Parsed 0 rows from data/raw\botnet_ip.csv
+2026-07-14 09:26:19,572 [INFO] sslbl_pipeline: Parsed 0 rows from data/raw\botnet_ip.csv
+2026-07-14 09:26:19,583 [INFO] sslbl_pipeline: Parsed 97 rows from data/raw\ja3.csv
+2026-07-14 09:26:19,583 [INFO] sslbl_pipeline: Parsed 97 rows from data/raw\ja3.csv
+2026-07-14 09:26:32,361 [ERROR] sslbl_pipeline: Conversion failed:
+Traceback (most recent call last):
+  File "C:\Users\jahan\Desktop\SSL\sslbl_pipeline\main.py", line 43, in main
+    bundle = build_bundle(all_rows)
+  File "C:\Users\jahan\Desktop\SSL\sslbl_pipeline\stix_convert.py", line 103, in build_bundle
+    indicators.append(build_indicator(feed_name, row))
+                      ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\jahan\Desktop\SSL\sslbl_pipeline\stix_convert.py", line 67, in build_indicator
+    pattern = "[x-ja3-fingerprint:hash = '{}']".format(row["JA3MD5"])
+                                                       ~~~^^^^^^^^^^
+KeyError: 'JA3MD5'
+
+2026-07-14 09:26:32,362 [ERROR] sslbl_pipeline: Raw CSV files on disk are unaffected. Re-running will retry conversion from saved data.
+2026-07-14 09:27:03,242 [INFO] sslbl_pipeline: Downloaded ssl_cert -> data/raw\ssl_cert.csv
+2026-07-14 09:27:04,364 [INFO] sslbl_pipeline: Downloaded botnet_ip -> data/raw\botnet_ip.csv
+2026-07-14 09:27:05,347 [INFO] sslbl_pipeline: Downloaded ja3 -> data/raw\ja3.csv
+2026-07-14 09:27:05,394 [INFO] sslbl_pipeline: Parsed 10183 rows from data/raw\ssl_cert.csv
+2026-07-14 09:27:05,394 [INFO] sslbl_pipeline: Parsed 10183 rows from data/raw\ssl_cert.csv
+2026-07-14 09:27:05,397 [INFO] sslbl_pipeline: Parsed 0 rows from data/raw\botnet_ip.csv
+2026-07-14 09:27:05,397 [INFO] sslbl_pipeline: Parsed 0 rows from data/raw\botnet_ip.csv
+2026-07-14 09:27:05,414 [INFO] sslbl_pipeline: Parsed 97 rows from data/raw\ja3.csv
+2026-07-14 09:27:05,414 [INFO] sslbl_pipeline: Parsed 97 rows from data/raw\ja3.csv
+2026-07-14 09:27:21,314 [INFO] sslbl_pipeline: Created bundle with 10280 indicators
+2026-07-14 09:27:22,340 [INFO] sslbl_pipeline: STIX bundle written to data/output\sslbl_bundle.json (10280 total: ssl_cert: 10183, botnet_ip: 0, ja3: 97)
+2026-07-14 09:36:15,755 [INFO] sslbl_pipeline: Downloaded ssl_cert -> data/raw\ssl_cert.csv
+2026-07-14 09:36:16,600 [INFO] sslbl_pipeline: Downloaded botnet_ip -> data/raw\botnet_ip.csv
+2026-07-14 09:36:17,717 [INFO] sslbl_pipeline: Downloaded ja3 -> data/raw\ja3.csv
+2026-07-14 09:36:17,791 [INFO] sslbl_pipeline: Parsed 10183 rows from data/raw\ssl_cert.csv
+2026-07-14 09:36:17,791 [INFO] sslbl_pipeline: Parsed 10183 rows from data/raw\ssl_cert.csv
+2026-07-14 09:36:17,793 [INFO] sslbl_pipeline: Parsed 0 rows from data/raw\botnet_ip.csv
+2026-07-14 09:36:17,793 [INFO] sslbl_pipeline: Parsed 0 rows from data/raw\botnet_ip.csv
+2026-07-14 09:36:17,807 [INFO] sslbl_pipeline: Parsed 97 rows from data/raw\ja3.csv
+2026-07-14 09:36:17,807 [INFO] sslbl_pipeline: Parsed 97 rows from data/raw\ja3.csv
+2026-07-14 09:36:48,996 [INFO] sslbl_pipeline: Created bundle with 10280 indicators
+2026-07-14 09:36:50,633 [INFO] sslbl_pipeline: STIX bundle written to data/output\sslbl_bundle.json (10280 total: ssl_cert: 10183, botnet_ip: 0, ja3: 97)

@@ -145,7 +145,7 @@ def main() -> None:
     # ----------------------------------------------------------------
 
     # --- Option A: hardcoded path ---
-    # folder_path = r"C:\Users\jahan\Desktop\ioc-enrichment\feeds"
+    #folder_path = r"C:\Users\jahan\Desktop\ioc-enrichment\feeds"
 
     # --- Option B: user input via CLI ---
     folder_path = input("Enter folder path: ").strip()
@@ -235,6 +235,8 @@ def main() -> None:
                             jsonl_file.write(json.dumps(record) + "\n")
                             jsonl_file.flush()
                             cache_hits += 1
+                            display = ioc_val if len(ioc_val) <= 16 else ioc_val[:16] + "..."
+                            print(f"  [cache] {display} → reused from earlier file")
 
                     if miss_list:
                         cat_results = _enrich_category(

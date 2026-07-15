@@ -1,0 +1,17 @@
+{
+  "knowledge_bases": {
+    "attack-enterprise": {
+      "version": null,
+      "objects_count": 0,
+      "status": "failed",
+      "error": "401 Client Error: Unauthorized for url: https://api.ctibutler.com/v1/attack-enterprise/versions/installed/"
+    },
+    "capec": {
+      "version": null,
+      "objects_count": 0,
+      "status": "failed",
+      "error": "401 Client Error: Unauthorized for url: https://api.ctibutler.com/v1/capec/versions/installed/"
+    }
+  },
+  "updated": "2026-07-07T08:09:58.436303+00:00"
+}

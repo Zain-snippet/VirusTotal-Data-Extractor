@@ -1,0 +1,17 @@
+{
+  "type": "bundle",
+  "spec_version": "2.1",
+  "id": "bundle--ef543c3b-ad17-434d-9cb1-ca626d610029",
+  "objects": [
+    {
+      "type": "identity",
+      "spec_version": "2.1",
+      "id": "identity--57a8c7c0-335f-4662-be69-f3969010f203",
+      "created": "2026-07-07T08:10:00.000Z",
+      "modified": "2026-07-07T08:10:00.000Z",
+      "name": "CTI Butler",
+      "identity_class": "organization",
+      "description": "CTI Feed: CTI Butler (https://www.ctibutler.com/)"
+    }
+  ]
+}

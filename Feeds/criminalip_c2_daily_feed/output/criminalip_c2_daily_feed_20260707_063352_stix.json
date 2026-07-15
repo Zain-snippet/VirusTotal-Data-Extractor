@@ -1,0 +1,1417 @@
+{
+  "type": "bundle",
+  "spec_version": "2.1",
+  "id": "bundle--6192b0dc-79a8-4489-8d02-8c042fe7aec8",
+  "objects": [
+    {
+      "type": "identity",
+      "spec_version": "2.1",
+      "id": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2",
+      "created": "2026-07-07T06:33:53.000Z",
+      "modified": "2026-07-07T06:33:53.000Z",
+      "name": "CriminalIP C2 Daily Feed",
+      "identity_class": "organization",
+      "description": "CTI Feed: CriminalIP C2 Daily Feed (https://github.com/criminalip/C2-Daily-Feed)"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--c3fca324-093e-4c6e-b54c-2765bf45bc03",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "name": "144.24.95.90 - C2",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 443",
+      "pattern": "[ipv4-addr:value = '144.24.95.90']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--ead9235d-4f12-42ba-a52d-ae659fa2bff4",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--c3fca324-093e-4c6e-b54c-2765bf45bc03",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--00f24a5a-fc91-49b5-a683-e1766aac8cab",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "name": "13.250.79.251 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 8086",
+      "pattern": "[ipv4-addr:value = '13.250.79.251']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--6b812c55-5efb-475b-b89c-393b5bfabc1b",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--00f24a5a-fc91-49b5-a683-e1766aac8cab",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--c01b3381-897b-4ceb-bc3e-61baf157d99f",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "name": "89.58.40.80 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 80",
+      "pattern": "[ipv4-addr:value = '89.58.40.80']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--1cc43dc8-9ebf-4bb5-96c6-b8753c6d39b0",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--c01b3381-897b-4ceb-bc3e-61baf157d99f",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--3e23d88b-9dde-4063-b4ac-6dc272a1283b",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "name": "82.156.224.184 - havoc",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 80",
+      "pattern": "[ipv4-addr:value = '82.156.224.184']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--690167f0-d8d8-4084-8740-2143f82c0bd0",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--3e23d88b-9dde-4063-b4ac-6dc272a1283b",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--39874b9d-63d2-4d78-9792-5ca8ed90c631",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "name": "45.138.50.124 - metasploit",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 3790",
+      "pattern": "[ipv4-addr:value = '45.138.50.124']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--be478258-0a4e-4c96-a36d-8bcec176c10d",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--39874b9d-63d2-4d78-9792-5ca8ed90c631",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--ee90d196-96ad-4176-baf9-79b895c337b6",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "name": "8.153.193.141 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 80",
+      "pattern": "[ipv4-addr:value = '8.153.193.141']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--139f61a3-50b0-4dfe-bd67-a56f12d4e120",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--ee90d196-96ad-4176-baf9-79b895c337b6",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--36839b29-f968-4466-9d6f-f5c272c20007",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "name": "51.195.109.99 - C2",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 443",
+      "pattern": "[ipv4-addr:value = '51.195.109.99']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--c092473a-4cc1-41a9-b275-4a4e4c154357",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--36839b29-f968-4466-9d6f-f5c272c20007",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--1daee8d6-7d07-46b6-acff-e295bb73022a",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "name": "8.222.192.153 - havoc",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 8080",
+      "pattern": "[ipv4-addr:value = '8.222.192.153']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--02e06f03-4394-410e-83e1-8404d13b92a5",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--1daee8d6-7d07-46b6-acff-e295bb73022a",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--d515be3f-633d-44a5-9f7a-4381363ee451",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "name": "77.92.95.127 - metasploit",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 3790",
+      "pattern": "[ipv4-addr:value = '77.92.95.127']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--2fb6247b-5a13-4b18-a373-10ce9603b5ff",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--d515be3f-633d-44a5-9f7a-4381363ee451",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--622cd7d3-88b5-41ce-ad6f-beac2a44a0db",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "name": "51.195.220.56 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 443",
+      "pattern": "[ipv4-addr:value = '51.195.220.56']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--e1a97038-5cce-4e1e-905b-d93b9b555bea",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--622cd7d3-88b5-41ce-ad6f-beac2a44a0db",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--ed68975e-d342-4567-ba6f-08e06080aa2e",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "name": "132.145.70.6 - mythic",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 443",
+      "pattern": "[ipv4-addr:value = '132.145.70.6']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--f6cadfe7-8876-494f-a92f-f318573c27e6",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--ed68975e-d342-4567-ba6f-08e06080aa2e",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--93964f72-b92a-4c2d-a60c-fafe26e3a451",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "name": "20.199.16.117 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 8080",
+      "pattern": "[ipv4-addr:value = '20.199.16.117']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--8095b8f1-8d44-444b-b95b-8464aa1fb993",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--93964f72-b92a-4c2d-a60c-fafe26e3a451",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--1b209b6a-4ec7-4259-b0f3-56990df948c9",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "name": "8.218.198.238 - metasploit",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 3790",
+      "pattern": "[ipv4-addr:value = '8.218.198.238']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--dc97c223-8b42-4332-a867-5cb9c9c45a5a",
+      "created": "2026-07-07T06:33:53.328Z",
+      "modified": "2026-07-07T06:33:53.328Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--1b209b6a-4ec7-4259-b0f3-56990df948c9",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--f25dfc66-cb88-4176-9649-9acb0a757fcb",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "45.79.198.18 - metasploit",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 3790",
+      "pattern": "[ipv4-addr:value = '45.79.198.18']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--a6a1f69f-ebfa-4c8e-8433-a8f844486981",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--f25dfc66-cb88-4176-9649-9acb0a757fcb",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--68072c6b-dbc0-47ab-afa5-2d9c47431e79",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "52.74.77.156 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 443",
+      "pattern": "[ipv4-addr:value = '52.74.77.156']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--e7b83dee-7cd8-4cc2-8ece-7f32dda409fa",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--68072c6b-dbc0-47ab-afa5-2d9c47431e79",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--ea8fcff7-457a-4197-980f-1016c8a04a9e",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "83.222.136.71 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 80",
+      "pattern": "[ipv4-addr:value = '83.222.136.71']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--0f4bda3c-5874-47bf-9da8-8fe9dae25524",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--ea8fcff7-457a-4197-980f-1016c8a04a9e",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--fe6bfc87-7033-41c4-b146-f0f2cb03d6f0",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "52.76.71.28 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 443",
+      "pattern": "[ipv4-addr:value = '52.76.71.28']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--22135ead-3b19-4ce1-9013-b64ddfdc1aaf",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--fe6bfc87-7033-41c4-b146-f0f2cb03d6f0",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--c10e0ab1-db67-449b-a477-0bb86d504482",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "98.187.161.247 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 3790",
+      "pattern": "[ipv4-addr:value = '98.187.161.247']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--2e6d4502-1d79-49d2-8355-660e4037c311",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--c10e0ab1-db67-449b-a477-0bb86d504482",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--7a7a6fd3-f815-4c60-8eaa-5dfeec0727b9",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "62.171.177.141 - metasploit",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 3790",
+      "pattern": "[ipv4-addr:value = '62.171.177.141']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--ad3798a5-378e-4dfe-a6e2-c787c17c2092",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--7a7a6fd3-f815-4c60-8eaa-5dfeec0727b9",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--eb708fc0-084e-4551-afc5-8daad5bbc755",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "34.117.216.69 - mythic",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 443",
+      "pattern": "[ipv4-addr:value = '34.117.216.69']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--ab38f6de-2891-4a52-be1c-3db9122ed0f2",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--eb708fc0-084e-4551-afc5-8daad5bbc755",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--97d1bfbe-01c0-4dfc-9447-bb41152b86bb",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "52.77.132.216 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 443",
+      "pattern": "[ipv4-addr:value = '52.77.132.216']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--97987951-441f-48f0-b890-16709e35103b",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--97d1bfbe-01c0-4dfc-9447-bb41152b86bb",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--88dd84e6-71f1-4c87-a8dd-dc428d315ac7",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "54.171.59.184 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 443",
+      "pattern": "[ipv4-addr:value = '54.171.59.184']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--7c526673-5ca0-4768-a83d-348eebb1e6ae",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--88dd84e6-71f1-4c87-a8dd-dc428d315ac7",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--9fed710f-9195-4de3-a92c-f8f4312a4138",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "78.40.194.67 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 80",
+      "pattern": "[ipv4-addr:value = '78.40.194.67']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--43f97bb1-d211-4109-92de-84d1325ba452",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--9fed710f-9195-4de3-a92c-f8f4312a4138",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--e06777cb-e7d4-470d-8b79-6bfada895a7b",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "66.228.49.103 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 443",
+      "pattern": "[ipv4-addr:value = '66.228.49.103']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--4b15b795-7782-4cb6-a30b-96843e211d82",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--e06777cb-e7d4-470d-8b79-6bfada895a7b",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--efc9ab8a-f1ab-402f-b9ca-87871c9b6625",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "15.204.14.143 - havoc",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 8000",
+      "pattern": "[ipv4-addr:value = '15.204.14.143']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--d3fe9e5f-92f1-4a25-a55d-58804ec152c4",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--efc9ab8a-f1ab-402f-b9ca-87871c9b6625",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--ff0e5820-8161-43d5-a3a8-9d2cdac17dc4",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "54.254.91.191 - metasploit",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 3790",
+      "pattern": "[ipv4-addr:value = '54.254.91.191']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--2e9651bb-d6c6-4fa2-8222-da454f2cc261",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--ff0e5820-8161-43d5-a3a8-9d2cdac17dc4",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--068e41d3-f881-43df-853c-552a329acf49",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "66.228.53.254 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 80",
+      "pattern": "[ipv4-addr:value = '66.228.53.254']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--52fd3371-1090-4c0f-9ac9-67cb4cc0e4c9",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--068e41d3-f881-43df-853c-552a329acf49",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--55a2d6eb-ebf1-4d7c-b7d3-07f7b94fc289",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "43.199.60.110 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 9443",
+      "pattern": "[ipv4-addr:value = '43.199.60.110']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--fce0bb87-4f0c-4584-881a-46cd1a156022",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--55a2d6eb-ebf1-4d7c-b7d3-07f7b94fc289",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--ba5b0f70-87c7-4b24-afd9-c1729c12d139",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "96.38.31.195 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 80",
+      "pattern": "[ipv4-addr:value = '96.38.31.195']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--3f1f7104-ed41-42e6-b27a-38184f1cebd0",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--ba5b0f70-87c7-4b24-afd9-c1729c12d139",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--702bc115-dee9-4e27-9e5a-76452fa43c74",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "52.39.171.29 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 443",
+      "pattern": "[ipv4-addr:value = '52.39.171.29']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--ae717797-02c9-4c99-a218-aa0c76e6cbf3",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--702bc115-dee9-4e27-9e5a-76452fa43c74",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--a880af0c-4450-4b0a-bca5-59365e93747f",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "23.254.215.118 - havoc",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 8443",
+      "pattern": "[ipv4-addr:value = '23.254.215.118']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--6e849622-d16f-4ad2-9ab8-bdb4b8f2a3c1",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--a880af0c-4450-4b0a-bca5-59365e93747f",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--338cebbf-9bea-43cf-8b9a-cc3e67eb97ef",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "18.136.38.112 - C2",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 443",
+      "pattern": "[ipv4-addr:value = '18.136.38.112']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--f188f314-2957-41de-880f-2b37c9eb3870",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--338cebbf-9bea-43cf-8b9a-cc3e67eb97ef",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--8d8b9c1e-0959-4d05-8343-48a5c42a3a8c",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "3.36.30.41 - C2",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 443",
+      "pattern": "[ipv4-addr:value = '3.36.30.41']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--94c3c75b-3da1-467f-955f-9223b1a0082c",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--8d8b9c1e-0959-4d05-8343-48a5c42a3a8c",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--98c32fca-f2cd-4e0c-8384-c1caf3dff709",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "37.221.196.152 - metasploit",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 3790",
+      "pattern": "[ipv4-addr:value = '37.221.196.152']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--544c365e-4001-454f-b8e7-d325d540ae85",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--98c32fca-f2cd-4e0c-8384-c1caf3dff709",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--6192ab61-2a47-42f9-a3a4-19c9a23ffdbe",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "8.153.194.249 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 80",
+      "pattern": "[ipv4-addr:value = '8.153.194.249']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--b47c2c1e-89ec-4f34-a095-2e686f42224f",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--6192ab61-2a47-42f9-a3a4-19c9a23ffdbe",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--a25a657b-0495-4e59-8801-f0836c77936e",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "88.119.170.212 - metasploit",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 3790",
+      "pattern": "[ipv4-addr:value = '88.119.170.212']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--dd2ad67b-ac59-462d-8da9-3666f0ccd91e",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--a25a657b-0495-4e59-8801-f0836c77936e",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--7a079d9d-b1fa-4d86-bc44-4b9b886eb3bd",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "96.38.101.107 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 80",
+      "pattern": "[ipv4-addr:value = '96.38.101.107']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--5d50818e-f0d0-429b-b892-0038ba0f6825",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--7a079d9d-b1fa-4d86-bc44-4b9b886eb3bd",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--01de1ac6-4b2b-4ae8-8bf1-13ac22944058",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "98.100.144.43 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 80",
+      "pattern": "[ipv4-addr:value = '98.100.144.43']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--95ab2dc7-4e2b-4243-80a2-48e8afb94a52",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--01de1ac6-4b2b-4ae8-8bf1-13ac22944058",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--7178ad99-3dca-4999-8555-d6f46b9468d4",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "45.227.254.6 - metasploit",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 3790",
+      "pattern": "[ipv4-addr:value = '45.227.254.6']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--9e8ecc08-d64a-4496-b7ef-cc472931c0dc",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--7178ad99-3dca-4999-8555-d6f46b9468d4",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--68949d4f-3f57-4a50-8a85-71abde73a7a6",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "66.94.126.203 - metasploit",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 3790",
+      "pattern": "[ipv4-addr:value = '66.94.126.203']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--15f06dfa-66b5-43db-b4c7-ff2551db524d",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--68949d4f-3f57-4a50-8a85-71abde73a7a6",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--7cb8516e-331b-4eb6-a22c-d765a6ca9305",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "77.92.95.143 - metasploit",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 3790",
+      "pattern": "[ipv4-addr:value = '77.92.95.143']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--4b9bab10-ef10-4570-a5e6-616174bc2d71",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--7cb8516e-331b-4eb6-a22c-d765a6ca9305",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--2f456ee0-0ec5-45c4-811b-66df17ca26ca",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "41.33.33.14 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 443",
+      "pattern": "[ipv4-addr:value = '41.33.33.14']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--90eaccaf-f02f-4cc7-9f1d-362d4a4ff393",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--2f456ee0-0ec5-45c4-811b-66df17ca26ca",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--537ed055-f752-4434-9eff-61a5e1d716b2",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "89.58.9.56 - metasploit",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 3790",
+      "pattern": "[ipv4-addr:value = '89.58.9.56']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--26f99ce6-29b2-4f8e-a759-a5c80bde6cf5",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--537ed055-f752-4434-9eff-61a5e1d716b2",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--41143554-0c8f-496f-8c2a-a3492d7e0983",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "54.189.189.167 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 8443",
+      "pattern": "[ipv4-addr:value = '54.189.189.167']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--60f893b7-6af7-4e23-ab07-85a616f00dfb",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--41143554-0c8f-496f-8c2a-a3492d7e0983",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--38a91888-3e6d-442f-b020-e47960f7a101",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "66.85.173.48 - metasploit",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 3790",
+      "pattern": "[ipv4-addr:value = '66.85.173.48']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--98e3cd0f-9d0c-4eb5-94a9-50a49715726a",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--38a91888-3e6d-442f-b020-e47960f7a101",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--e4ce5c88-c27b-4a5d-956c-884678922985",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "38.55.193.188 - metasploit",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 3790",
+      "pattern": "[ipv4-addr:value = '38.55.193.188']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--882cb003-eb66-4c52-9ee9-8c88729b287b",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--e4ce5c88-c27b-4a5d-956c-884678922985",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--17eee0d2-d529-4466-9d60-7b1548c0028a",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "52.38.121.2 - C2",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 443",
+      "pattern": "[ipv4-addr:value = '52.38.121.2']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--4e7dfaf5-68b5-4408-bf96-0248cd36fd49",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--17eee0d2-d529-4466-9d60-7b1548c0028a",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--9fb5b31e-44e8-4a18-9efa-572996bebe6f",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "88.218.17.218 - meshagent",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 443",
+      "pattern": "[ipv4-addr:value = '88.218.17.218']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--b4a0232c-9f7a-44e6-9cdf-dc2401d1b68f",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--9fb5b31e-44e8-4a18-9efa-572996bebe6f",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--a8fff9e0-02db-46ef-aca9-e7d364153b26",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "52.3.8.179 - metasploit",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 3790",
+      "pattern": "[ipv4-addr:value = '52.3.8.179']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--11b05cdc-3665-4c86-8fe5-9e67bdf0a34c",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--a8fff9e0-02db-46ef-aca9-e7d364153b26",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--2b3da727-3ba0-4120-9a42-68afb26d6657",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "name": "5.44.240.151 - metasploit",
+      "description": "CriminalIP C2 Feed - Traffic seen on port 3790",
+      "pattern": "[ipv4-addr:value = '5.44.240.151']",
+      "pattern_type": "stix",
+      "valid_from": "2026-07-07T00:00:00.000Z",
+      "labels": [
+        "malicious-activity",
+        "c2",
+        "criminalip"
+      ],
+      "confidence": 100
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--fb1303ac-2d18-4fc1-95c6-658f0c62a2dd",
+      "created": "2026-07-07T06:33:53.329Z",
+      "modified": "2026-07-07T06:33:53.329Z",
+      "relationship_type": "observed-in",
+      "source_ref": "indicator--2b3da727-3ba0-4120-9a42-68afb26d6657",
+      "target_ref": "identity--fb974003-9b99-4f5d-854a-d928ae8e2ff2"
+    }
+  ]
+}

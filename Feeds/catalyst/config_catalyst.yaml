@@ -1,0 +1,11 @@
+app:
+  log_level: INFO
+  output_dir: output
+catalyst:
+  base_url: https://prod.blindspot.prodaft.com/api
+  api_key: ''
+  tlp_filter: ALL
+  category_filter: ALL
+  sync_days_back: 730
+  create_observables: true
+  create_indicators: false

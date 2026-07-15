@@ -1,0 +1,6 @@
+threatfox_csv_url: https://threatfox.abuse.ch/export/csv/recent/
+import_offline: true
+create_indicators: true
+default_score: 50
+interval_days: 3
+output_directory: output

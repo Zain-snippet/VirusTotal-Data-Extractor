@@ -1,0 +1,10 @@
+app:
+  log_level: INFO
+  output_dir: output
+criminalipc2dailyfeed:
+  csv_url: https://raw.githubusercontent.com/criminalip/C2-Daily-Feed/refs/heads/main
+  score: 100
+  interval: 1
+  timeout_seconds: 60
+  max_retries: 3
+  retry_backoff_seconds: 2.0

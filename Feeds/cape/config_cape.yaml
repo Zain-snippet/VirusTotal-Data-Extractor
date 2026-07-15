@@ -1,0 +1,16 @@
+app:
+  log_level: INFO
+  output_dir: output
+cape:
+  api_url: https://cape.example.com/apiv2/
+  base_url: https://cape.example.com/
+  interval: 30
+  start_task_id: 0
+  report_score: 7
+  create_indicators: true
+  enable_network_traffic: false
+  enable_registry_keys: false
+  verify_ssl: true
+  timeout_seconds: 60
+  max_retries: 3
+  retry_backoff_seconds: 2.0

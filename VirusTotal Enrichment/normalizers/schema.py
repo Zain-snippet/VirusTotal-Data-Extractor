@@ -78,3 +78,7 @@ class IOCResult:
 
     # ── Source file tracking (populated by folder-scanned mode) ──
     source_file: Optional[str] = None
+
+    # ── Origin feed tracking (populated by folder-scanned mode) ──
+    origin_feed: Optional[str] = None
+    origin_data: list[dict] = field(default_factory=list)

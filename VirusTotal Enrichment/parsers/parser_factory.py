@@ -38,11 +38,12 @@ def _is_stix_bundle(data: Any) -> bool:
     )
 
 
-def detect_and_parse(filepath: str) -> dict[str, list[str]]:
+def detect_and_parse(filepath: str) -> dict[str, list[dict]]:
     """Detect the input format and return categorised IOCs.
 
     Returns the standard four-key dict — every key present, possibly
-    with an empty list.
+    with an empty list.  Each list holds dicts with ``value`` and
+    ``origin_data`` keys (see the individual parser docs).
     """
     path = Path(filepath)
 

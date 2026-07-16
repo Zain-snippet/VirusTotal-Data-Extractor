@@ -45,18 +45,29 @@ _QUERYABLE_TYPES = ("hash", "ip", "cert_hash")
 
 # ── Per-IOC enrichment (worker thread) ────────────────────────────────
 
-def _enrich(worker: vt_connector.VTKeyWorker, ioc: str, ioc_type: str) -> IOCResult:
+def _enrich(
+    worker: vt_connector.VTKeyWorker,
+    ioc: str,
+    ioc_type: str,
+    origin_feed: Optional[str] = None,
+    origin_data: Optional[list[dict]] = None,
+) -> IOCResult:
     """Query VirusTotal via *worker* and return a normalized IOCResult.
 
     Never raises — errors are captured into the returned IOCResult so the
     caller can continue processing the remaining IOCs.
+    *origin_feed* and *origin_data* are attached to the result for
+    downstream traceability.
     """
     try:
         if ioc_type == "ip":
             raw = worker.query_ip(ioc)
         else:
             raw = worker.query(ioc)
-        return vt_normalize(raw, ioc, ioc_type)
+        result = vt_normalize(raw, ioc, ioc_type)
+        result.origin_feed = origin_feed
+        result.origin_data = origin_data or []
+        return result
     except (MissingAPIKeyError, ConnectorError) as e:
         return IOCResult(
             source="virustotal",
@@ -64,6 +75,8 @@ def _enrich(worker: vt_connector.VTKeyWorker, ioc: str, ioc_type: str) -> IOCRes
             ioc_type=ioc_type,
             query_success=False,
             error=str(e),
+            origin_feed=origin_feed,
+            origin_data=origin_data or [],
         )
     except Exception as e:  # noqa: BLE001
         return IOCResult(
@@ -72,21 +85,35 @@ def _enrich(worker: vt_connector.VTKeyWorker, ioc: str, ioc_type: str) -> IOCRes
             ioc_type=ioc_type,
             query_success=False,
             error=f"Unexpected error: {e}",
+            origin_feed=origin_feed,
+            origin_data=origin_data or [],
         )
 
 
 def _enrich_category(
     category: str,
-    iocs: list[str],
+    iocs: list[dict],
     workers: list,
     executor: ThreadPoolExecutor,
     jsonl_file,
 ) -> list[IOCResult]:
-    """Submit all IOCs of one category to the thread pool and collect results."""
+    """Submit all IOCs of one category to the thread pool and collect results.
+
+    Each item in *iocs* is a dict with ``value``, ``origin_data``, and
+    ``origin_feed`` keys.  Only ``value`` is sent to VirusTotal; the
+    origin metadata is attached to the result for downstream traceability.
+    """
     num_workers = len(workers)
     futures = [
-        executor.submit(_enrich, workers[i % num_workers], ioc, category)
-        for i, ioc in enumerate(iocs)
+        executor.submit(
+            _enrich,
+            workers[i % num_workers],
+            item["value"],
+            category,
+            item.get("origin_feed"),
+            item.get("origin_data"),
+        )
+        for i, item in enumerate(iocs)
     ]
 
     processed: set = set()
@@ -133,6 +160,18 @@ def _enrich_category(
     return results
 
 
+# ── Feed-name derivation ──────────────────────────────────────────────
+
+def _derive_origin_feed(folder_path: str) -> str:
+    """Derive a human-readable feed name from a folder path."""
+    path_lower = folder_path.lower()
+    if "abuseipdb" in path_lower:
+        return "abuseipdb"
+    if "sslbl" in path_lower:
+        return "sslbl"
+    return Path(folder_path).parent.name.lower()
+
+
 # ── Main ──────────────────────────────────────────────────────────────
 
 def main() -> None:
@@ -170,13 +209,15 @@ def main() -> None:
     own_output_dir = Path(output_dir).resolve()
 
     # ── Discover input files across all folders ──────────────────────
-    files: list[Path] = []
+    # Each entry: (origin_feed, file_path)
+    files: list[tuple[str, Path]] = []
     for folder_path in folder_paths:
         folder = Path(folder_path)
         if not folder.exists() or not folder.is_dir():
             print(f"[error] Invalid folder path, skipping: {folder_path}", file=sys.stderr)
             continue
 
+        origin_feed = _derive_origin_feed(folder_path)
         folder_files = sorted(
             set(folder.rglob("*.json")) | set(folder.rglob("*.jsonl"))
         )
@@ -184,9 +225,10 @@ def main() -> None:
             f for f in folder_files
             if own_output_dir not in f.resolve().parents
         ]
-        files.extend(folder_files)
+        for f in folder_files:
+            files.append((origin_feed, f))
 
-    files = sorted(set(files))
+    files = sorted(set(files), key=lambda x: x[1])
 
     if not files:
         print("\nNo .json or .jsonl files found across the given folders (excluding this script's own output/). Exiting.")
@@ -216,7 +258,7 @@ def main() -> None:
     with ThreadPoolExecutor(max_workers=num_workers) as executor:
         jsonl_file = open(jsonl_path, "w", encoding="utf-8")
 
-        for file in files:
+        for origin_feed, file in files:
             try:
                 print(f"\n--- Processing: {file} ---")
                 iocs = extract_iocs_from_file(str(file))
@@ -226,6 +268,11 @@ def main() -> None:
                     print(f"  No IOCs found, skipping.")
                     files_skipped += 1
                     continue
+
+                # Stamp origin_feed on every extracted item
+                for cat_items in iocs.values():
+                    for item in cat_items:
+                        item["origin_feed"] = origin_feed
 
                 # JA3 — count-only, never queried
                 ja3_count = len(iocs.get("ja3", []))
@@ -239,27 +286,56 @@ def main() -> None:
                     if not items:
                         continue
 
-                    hit_list: list[str] = []
-                    miss_list: list[str] = []
-                    for ioc_val in items:
-                        key = (category, ioc_val.lower())
+                    hit_list: list[dict] = []
+                    miss_list: list[dict] = []
+                    for item in items:
+                        key = (category, item["value"].lower())
                         if key in ioc_cache:
-                            hit_list.append(ioc_val)
+                            hit_list.append(item)
                         else:
-                            miss_list.append(ioc_val)
+                            miss_list.append(item)
 
                     if hit_list:
-                        for ioc_val in hit_list:
-                            cached = ioc_cache[(category, ioc_val.lower())]
+                        for item in hit_list:
+                            key = (category, item["value"].lower())
+                            cached = ioc_cache[key]
+
+                            # Merge origin_data — append new entries
+                            merged_origin_data = list(cached.origin_data)
+                            for od in item.get("origin_data", []):
+                                if od not in merged_origin_data:
+                                    merged_origin_data.append(od)
+
+                            # Merge origin_feed — join unique feed names
+                            merged_origin_feed = cached.origin_feed
+                            new_feed = item.get("origin_feed")
+                            if new_feed:
+                                if merged_origin_feed:
+                                    feeds = set(merged_origin_feed.split(", "))
+                                    feeds.add(new_feed)
+                                    merged_origin_feed = ", ".join(sorted(feeds))
+                                else:
+                                    merged_origin_feed = new_feed
+
                             result = dataclasses.replace(
-                                cached, source_file=str(file)
+                                cached,
+                                source_file=str(file),
+                                origin_feed=merged_origin_feed,
+                                origin_data=merged_origin_data,
+                            )
+                            # Update cache entry with merged data so
+                            # subsequent hits see the accumulated origins
+                            ioc_cache[key] = dataclasses.replace(
+                                cached,
+                                origin_feed=merged_origin_feed,
+                                origin_data=merged_origin_data,
                             )
                             session_results.append(result)
                             record = dataclasses.asdict(result)
                             jsonl_file.write(json.dumps(record) + "\n")
                             jsonl_file.flush()
                             cache_hits += 1
-                            display = ioc_val if len(ioc_val) <= 16 else ioc_val[:16] + "..."
+                            display = item["value"] if len(item["value"]) <= 16 else item["value"][:16] + "..."
                             print(f"  [cache] {display} → reused from earlier file")
 
                     if miss_list:

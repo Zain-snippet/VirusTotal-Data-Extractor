@@ -161,13 +161,17 @@ def parse_pattern(pattern: str) -> list[tuple[str, str]]:
     return results
 
 
-def parse_stix_bundle(data: dict) -> dict[str, list[str]]:
+def parse_stix_bundle(data: dict) -> dict[str, list[dict]]:
     """Extract all IOCs from a STIX 2.1 bundle dict.
 
     Returns the standard four-key dict: ``hash``, ``ip``, ``cert_hash``,
     ``ja3``.  Every key is present (empty list if none found).
+
+    Each list holds dicts with keys ``value`` (the IOC string) and
+    ``origin_data`` (relevant fields from the parent indicator object,
+    e.g. labels, description, valid_from).
     """
-    by_type: dict[str, list[str]] = {
+    by_type: dict[str, list[dict]] = {
         "hash": [],
         "ip": [],
         "cert_hash": [],
@@ -183,10 +187,16 @@ def parse_stix_bundle(data: dict) -> dict[str, list[str]]:
         if not isinstance(pattern, str) or not pattern:
             continue
 
+        origin_data = {
+            k: obj.get(k)
+            for k in ("labels", "description", "valid_from", "pattern", "created", "modified", "indicator_types")
+            if obj.get(k) is not None
+        }
+
         for ioc_type, value in parse_pattern(pattern):
             key = value.lower()
             if key not in seen[ioc_type]:
                 seen[ioc_type].add(key)
-                by_type[ioc_type].append(value)
+                by_type[ioc_type].append({"value": value, "origin_data": origin_data})
 
     return by_type

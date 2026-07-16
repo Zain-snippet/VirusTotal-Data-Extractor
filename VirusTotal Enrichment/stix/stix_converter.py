@@ -71,6 +71,9 @@ def _build_custom_properties(result: IOCResult) -> dict:
     Indicator doesn't get cluttered with nulls/empty lists.
     """
     candidates = {
+        # Origin feed / data (set by caller, not by VT)
+        "x_origin_feed": result.origin_feed,
+        "x_origin_data": result.origin_data,
         # File-specific fields
         "x_vt_md5": result.md5,
         "x_vt_sha1": result.sha1,

@@ -88,12 +88,12 @@ def get_hashes_from_file(filepath: str) -> list[str]:
         file cannot be read, does not exist, or contains no matching values.
     """
     iocs = detect_and_parse(filepath)
-    return iocs["hash"]
+    return [item["value"] for item in iocs["hash"]]
 
 
 # ── Input method 3: multi-IOC-type extraction (auto-detected format) ──
 
-def extract_iocs_from_file(filepath: str) -> dict[str, list[str]]:
+def extract_iocs_from_file(filepath: str) -> dict[str, list[dict]]:
     """Parse a JSON file and return all detected IOCs categorised by type.
 
     The input format is detected automatically:
@@ -107,7 +107,8 @@ def extract_iocs_from_file(filepath: str) -> dict[str, list[str]]:
        go into ``ip``; 32/40/64 hex strings go into ``hash``.
 
     Returns a dict with keys ``hash``, ``ip``, ``cert_hash``, ``ja3``,
-    each holding a deduplicated list of string values. Every key is
-    always present (empty list if none found).
+    each holding a deduplicated list of dicts with ``value`` and
+    ``origin_data`` keys. Every key is always present (empty list if
+    none found).
     """
     return detect_and_parse(filepath)
